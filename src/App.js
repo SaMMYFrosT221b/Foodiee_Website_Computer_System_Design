@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import Express from 'express';
+import { showUser,showDeliveryBoy,showShopkeeper } from './databases.js';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const app = Express();
+const PORT  = 3000;
 
-export default App;
+
+app.get('/users',  async(req, res) => {
+  const notes = await showUser();
+  res.send(notes);
+});
+
+app.get('/shopkeepers',  async(req, res) => {
+  const notes = await showShopkeeper();
+  res.send(notes);
+});
+
+app.get('/diliveryboys',  async(req, res) => {
+  const notes = await showDeliveryBoy();
+  res.send(notes);
+});
+
+
+app.listen(PORT, () => {  
+  console.log(`Server running on port ${PORT}`);
+});
+
